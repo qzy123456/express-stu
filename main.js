@@ -14,6 +14,9 @@ const { redisClient, connectRedis, disconnectRedis } = require('./redis-connecti
 // 导入路由模块
 const routes = require('./routes');
 
+// 导入错误处理中间件
+const { errorHandler, notFoundHandler, setupGlobalErrorHandlers } = require('./middleware/error-handler');
+
 // 创建express应用实例
 const app = express();
 const port = appConfig.port;
@@ -48,8 +51,16 @@ process.on('SIGINT', () => {
 // 使用路由模块
 app.use('/', routes);
 
+// 404 中间件 - 处理未匹配到路由的请求
+app.use(notFoundHandler);
+
+// 全局错误处理中间件
+app.use(errorHandler);
+
 // 主函数：连接数据库和启动服务器
 async function startApp() {
+  // 设置全局错误处理器，防止进程因为未处理的异常而崩溃
+  setupGlobalErrorHandlers();
   try {
     // 连接Redis
     await connectRedis();
