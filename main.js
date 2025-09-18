@@ -17,6 +17,7 @@ import routes from './routes/index.js';
 // 导入中间件
 import { errorHandler, notFoundHandler, setupGlobalErrorHandlers } from './middleware/error-handler.js';
 import { verifyToken } from './middleware/jwt.js';
+import { apiRateLimiter } from './middleware/rate-limiter.js';
 
 // 创建express应用实例
 const app = express();
@@ -24,6 +25,10 @@ const port = appConfig.port;
 
 // 配置中间件以解析JSON请求体
 app.use(express.json());
+
+// 应用API限流中间件
+// 注：限流中间件应在认证中间件之前应用，以先拦截过多的请求
+app.use(apiRateLimiter);
 
 // 将redisClient和sequelize模型挂载到app实例上，方便后续路由使用
 app.locals.redisClient = redisClient;

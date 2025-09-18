@@ -7,7 +7,10 @@ dotenv.config();
 // 应用程序配置
 export const appConfig = {
   env: process.env.NODE_ENV || 'development',
-  port: process.env.PORT || 3000
+  port: process.env.PORT || 3000,
+  // 限流配置
+  rateLimitWindowMs: process.env.RATE_LIMIT_WINDOW_MS ? parseInt(process.env.RATE_LIMIT_WINDOW_MS) : null,
+  rateLimitMaxRequests: process.env.RATE_LIMIT_MAX_REQUESTS ? parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) : null
 };
 
 // 数据库配置
