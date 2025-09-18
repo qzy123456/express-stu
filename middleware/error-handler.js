@@ -1,4 +1,4 @@
-const logger = require('../config/logger');
+import logger from '../config/logger.js';
 
 /**
  * 全局错误处理中间件
@@ -85,7 +85,7 @@ const setupGlobalErrorHandlers = () => {
   });
 };
 
-module.exports = {
+export { 
   errorHandler,
   notFoundHandler,
   setupGlobalErrorHandlers

@@ -1,16 +1,17 @@
 // 统一配置管理模块
 
 // 加载环境变量
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 // 应用程序配置
-exports.appConfig = {
+export const appConfig = {
   env: process.env.NODE_ENV || 'development',
   port: process.env.PORT || 3000
 };
 
 // 数据库配置
-exports.database = {
+export const database = {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   username: process.env.DB_USERNAME,
@@ -24,7 +25,7 @@ exports.database = {
 };
 
 // Redis配置
-exports.redis = {
+export const redis = {
   url: process.env.REDIS_URL,
   password: process.env.REDIS_PASSWORD,
   db: process.env.REDIS_DB,
@@ -48,14 +49,14 @@ exports.redis = {
 };
 
 // JWT配置
-exports.jwt = {
+export const jwt = {
   secret: process.env.JWT_SECRET,
   expiresIn: process.env.JWT_EXPIRES_IN,
   refreshTokenExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN
 };
 
 // 日志配置
-exports.logger = {
+export const logger = {
   level: process.env.LOG_LEVEL || 'info',
   dir: process.env.LOG_DIR || './logs',
   maxSize: process.env.LOG_MAX_SIZE || '20m',

@@ -1,7 +1,7 @@
 // Sequelize连接实例
-const { Sequelize } = require('sequelize');
-const { database } = require('./config');
-const logger = require('./config/logger');
+import { Sequelize } from 'sequelize';
+import { database } from './config/index.js';
+import logger from './config/logger.js';
 
 // 创建Sequelize实例
 const sequelize = new Sequelize(
@@ -40,7 +40,7 @@ async function syncModels() {
 }
 
 // 导出Sequelize实例和相关函数
-module.exports = {
+export { 
   sequelize,
   Sequelize,
   testConnection,

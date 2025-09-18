@@ -1,7 +1,7 @@
 // User模型定义
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../db-connection');
-const bcrypt = require('bcrypt');
+import { DataTypes } from 'sequelize';
+import { sequelize } from '../db-connection.js';
+import bcrypt from 'bcrypt';
 
 const User = sequelize.define('User', {
   // 定义模型属性
@@ -91,4 +91,4 @@ User.prototype.validPassword = async function(password) {
   return await bcrypt.compare(password, this.getDataValue('password'));
 };
 
-module.exports = User;
+export default User;

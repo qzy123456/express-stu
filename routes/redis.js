@@ -1,5 +1,5 @@
 // Redis相关路由
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
 // 设置Redis值的路由
@@ -84,4 +84,4 @@ router.get('/get', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

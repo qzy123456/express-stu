@@ -1,7 +1,7 @@
 // Product模型定义
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../db-connection');
-const Category = require('./category');
+import { DataTypes } from 'sequelize';
+import { sequelize } from '../db-connection.js';
+import Category from './category.js';
 
 const Product = sequelize.define('Product', {
   // 定义模型属性
@@ -68,4 +68,4 @@ Product.belongsTo(Category, {
   as: 'category'
 });
 
-module.exports = Product;
+export default Product;

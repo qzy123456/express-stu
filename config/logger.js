@@ -1,7 +1,8 @@
-const winston = require('winston');
-const DailyRotateFile = require('winston-daily-rotate-file');
-const path = require('path');
-const config = require('./index').logger;
+import winston from 'winston';
+import DailyRotateFile from 'winston-daily-rotate-file';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { logger as loggerConfig } from './index.js';
 
 // 定义JSON格式（用于文件输出）
 const jsonFormat = winston.format.combine(
@@ -25,11 +26,11 @@ const consoleFormat = winston.format.combine(
 // 创建普通日志传输（info 级别及以上）
 const infoTransport = new DailyRotateFile({
   filename: 'data-%DATE%.log',
-  datePattern: config.datePattern,
+  datePattern: loggerConfig.datePattern,
   zippedArchive: false,
-  maxSize: config.maxSize,
-  maxFiles: config.maxFiles, // 保留日志天数
-  dirname: config.dir.startsWith('./') ? path.join(__dirname, '../', config.dir) : config.dir,
+  maxSize: loggerConfig.maxSize,
+  maxFiles: loggerConfig.maxFiles, // 保留日志天数
+  dirname: loggerConfig.dir.startsWith('./') ? path.join(path.dirname(fileURLToPath(import.meta.url)), '../', loggerConfig.dir) : loggerConfig.dir,
   level: 'info',
   format: jsonFormat
 });
@@ -37,11 +38,11 @@ const infoTransport = new DailyRotateFile({
 // 创建错误日志传输（error 级别及以上）
 const errorTransport = new DailyRotateFile({
   filename: 'err-%DATE%.log',
-  datePattern: config.datePattern,
+  datePattern: loggerConfig.datePattern,
   zippedArchive: false,
-  maxSize: config.maxSize,
-  maxFiles: config.maxErrorFiles, // 保留错误日志天数
-  dirname: config.dir.startsWith('./') ? path.join(__dirname, '../', config.dir) : config.dir,
+  maxSize: loggerConfig.maxSize,
+  maxFiles: loggerConfig.maxErrorFiles, // 保留错误日志天数
+  dirname: loggerConfig.dir.startsWith('./') ? path.join(path.dirname(fileURLToPath(import.meta.url)), '../', loggerConfig.dir) : loggerConfig.dir,
   level: 'error',
   format: jsonFormat
 });
@@ -53,9 +54,9 @@ const consoleTransport = new winston.transports.Console({
 
 // 创建 logger 实例
 const logger = winston.createLogger({
-  level: config.level,
+  level: loggerConfig.level,
   defaultMeta: {
-    service: config.serviceName
+    service: loggerConfig.serviceName
   },
   transports: [
     infoTransport,
@@ -64,4 +65,4 @@ const logger = winston.createLogger({
   ]
 });
 
-module.exports = logger;
+export default logger;

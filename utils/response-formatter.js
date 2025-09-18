@@ -18,8 +18,7 @@ class ResponseFormatter {
       msg: message,
       data: data === undefined ? null : data
     };
-    const statusCode = code >= 100 && code < 600 ? code : 200;
-    res.status(statusCode).json(responseData);
+    res.status(200).json(responseData);
   }
 
   /**
@@ -35,8 +34,7 @@ class ResponseFormatter {
       msg: message,
       data: data === undefined ? null : data
     };
-    const statusCode = code >= 100 && code < 600 ? code : 500;
-    res.status(statusCode).json(responseData);
+    res.status(200).json(responseData);
   }
 
   /**
@@ -196,4 +194,4 @@ class ResponseFormatter {
   }
 }
 
-module.exports = ResponseFormatter;
+export default ResponseFormatter;

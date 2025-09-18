@@ -1,7 +1,7 @@
 // Redis连接实例
-const redis = require('redis');
-const { redis: redisConfig } = require('./config');
-const logger = require('./config/logger');
+import redis from 'redis';
+import { redis as redisConfig } from './config/index.js';
+import logger from './config/logger.js';
 
 // 创建Redis客户端实例
 const redisClient = redis.createClient({
@@ -105,7 +105,7 @@ async function del(key) {
 }
 
 // 导出Redis客户端和相关函数
-module.exports = {
+export {
   redisClient,
   connectRedis,
   disconnectRedis,

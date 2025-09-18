@@ -1,12 +1,12 @@
 // 用户相关路由
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { body, validationResult } = require('express-validator');
-const { getWithRefresh, setWithTtl } = require('../redis-connection');
-const { generateToken, verifyToken } = require('../middleware/jwt');
-const jwt = require('jsonwebtoken');
-const { jwt: jwtConfig } = require('../config/index');
-const logger = require('../config/logger');
+import { body, validationResult } from 'express-validator';
+import { getWithRefresh, setWithTtl } from '../redis-connection.js';
+import { generateToken, verifyToken } from '../middleware/jwt.js';
+import jwt from 'jsonwebtoken';
+import { jwt as jwtConfig } from '../config/index.js';
+import logger from '../config/logger.js';
 
 // 创建用户路由
 router.post('/user', [
@@ -323,4 +323,4 @@ router.get('/users', verifyToken, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

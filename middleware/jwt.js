@@ -1,7 +1,7 @@
 // JWT中间件
-const jwt = require('jsonwebtoken');
-const { jwt: jwtConfig } = require('../config');
-const logger = require('../config/logger');
+import jwt from 'jsonwebtoken';
+import { jwt as jwtConfig } from '../config/index.js';
+import logger from '../config/logger.js';
 
 /**
  * 生成JWT Token
@@ -29,6 +29,30 @@ const generateRefreshToken = (payload) => {
  * @param {Function} next - Express的next函数
  */
 const verifyToken = (req, res, next) => {
+  // 定义不需要JWT认证的公开路由
+  const publicRoutes = [
+    '/',             // 首页
+    '/user',         // 用户注册
+    '/login',        // 用户登录
+    '/refresh-token' // 刷新Token
+  ];
+
+  // 检查请求路径是否在公开路由列表中
+  const isPublicRoute = publicRoutes.some(route => {
+    if (typeof route === 'string') {
+      // 精确匹配路径
+      return req.path === route;
+    }
+    // 路径模式匹配
+    return route.test(req.path);
+  });
+  
+  // 如果是公开路由，直接通过
+  if (isPublicRoute) {
+    logger.debug(`访问公开路由: ${req.path}`);
+    return next();
+  }
+
   // 从请求头的Authorization字段获取token
   const authHeader = req.headers.authorization;
   
@@ -82,7 +106,7 @@ const verifyRefreshToken = (refreshToken) => {
 };
 
 // 导出所有函数
-module.exports = {
+export {
   generateToken,
   generateRefreshToken,
   verifyToken,

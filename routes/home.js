@@ -1,7 +1,7 @@
 // 首页路由
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const Response = require('../utils/response-formatter');
+import Response from '../utils/response-formatter.js';
 
 // 首页路由
 router.get('/', (req, res) => {
@@ -27,4 +27,4 @@ router.get('/test-promise-reject', (req, res) => {
   Response.success(res, null, 'Promise拒绝已触发，请查看日志');
 });
 
-module.exports = router;
+export default router;

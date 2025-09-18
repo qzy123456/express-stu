@@ -1,5 +1,5 @@
 // 分类相关路由
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
 // 获取分类列表路由
@@ -48,4 +48,4 @@ router.get('/categories', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

@@ -1,4 +1,5 @@
 {
+	"type": "module",
 	"scripts": {
 		"start": "powershell -Command \"Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force; node main.js\""
 	},

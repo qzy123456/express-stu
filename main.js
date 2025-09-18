@@ -1,21 +1,22 @@
-const express = require('express');
+import express from 'express';
 
 // 导入配置和日志模块
-const { appConfig } = require('./config');
-const logger = require('./config/logger');
+import { appConfig } from './config/index.js';
+import logger from './config/logger.js';
 
 // 导入Sequelize相关模块
-const { sequelize, testConnection, syncModels } = require('./db-connection');
-const { User, Product, Category } = require('./models');
+import { sequelize, testConnection, syncModels } from './db-connection.js';
+import { User, Product, Category } from './models/index.js';
 
 // 导入Redis连接模块
-const { redisClient, connectRedis, disconnectRedis } = require('./redis-connection');
+import { redisClient, connectRedis, disconnectRedis } from './redis-connection.js';
 
 // 导入路由模块
-const routes = require('./routes');
+import routes from './routes/index.js';
 
-// 导入错误处理中间件
-const { errorHandler, notFoundHandler, setupGlobalErrorHandlers } = require('./middleware/error-handler');
+// 导入中间件
+import { errorHandler, notFoundHandler, setupGlobalErrorHandlers } from './middleware/error-handler.js';
+import { verifyToken } from './middleware/jwt.js';
 
 // 创建express应用实例
 const app = express();
@@ -47,6 +48,10 @@ process.on('SIGINT', () => {
     process.exit(1);
   });
 });
+
+// 应用JWT认证中间件（在路由注册之前）
+// 注：verifyToken方法内部已集成路由白名单功能
+app.use(verifyToken);
 
 // 使用路由模块
 app.use('/', routes);

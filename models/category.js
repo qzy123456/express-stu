@@ -1,6 +1,6 @@
 // Category模型定义
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../db-connection');
+import { DataTypes } from 'sequelize';
+import { sequelize } from '../db-connection.js';
 
 const Category = sequelize.define('Category', {
   // 定义模型属性
@@ -59,4 +59,4 @@ Category.belongsTo(Category, {
   as: 'parent'
 });
 
-module.exports = Category;
+export default Category;

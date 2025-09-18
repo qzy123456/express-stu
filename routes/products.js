@@ -1,8 +1,8 @@
 // 产品相关路由
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { body, validationResult } = require('express-validator');
-const { setWithTtl } = require('../redis-connection');
+import { body, validationResult } from 'express-validator';
+import { setWithTtl } from '../redis-connection.js';
 
 // 创建产品路由
 router.post('/product/create', [
@@ -140,4 +140,4 @@ router.get('/products', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
