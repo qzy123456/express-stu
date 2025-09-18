@@ -55,7 +55,7 @@ async function disconnectRedis() {
     logger.error('关闭Redis连接时出错:', err);
     // 尝试强制断开连接
     try {
-      await redisClient.disconnect();
+      await redisClient.destroy();
     } catch (disconnectErr) {
       logger.error('强制断开Redis连接时出错:', disconnectErr);
     }
